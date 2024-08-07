@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Gruppo&display=swap" rel="stylesheet">
+    <title>Stock Analysis</title>
+    <style>
+        body {
+            font-family: 'Gruppo', sans-serif;
+            margin: 0;
+            color: white;
+            text-align: center;
+            background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGlpdnZkdHhlN3h5dTFkaWFxYnk4dnc5Zmhic3VsYzV3ajZxbHYwNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XDd5b7NUbS1C1PMjUl/giphy.webp');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 70px; /* Adjust this value as needed */
+        }
+        nav {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav ul li a:hover {
+            background-color: black;
+            color: white;
+        }
+        .handle-name {
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px; /* Adjust this value to move it slightly left */
+        }
+        .form-container, .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .form-container:hover, .result-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+        }
+        form label, form input, form button, .result {
+            display: block;
+            font-size: 20px;
+            width: 100%;
+            text-align: center;
+            margin: 10px 0;
+        }
+        form input, form button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        form input {
+            background-color: #555;
+            color: white;
+        }
+        form input:focus {
+            outline: none;
+            background-color: #666;
+        }
+        form button {
+            background-color: #ff6600;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form button:hover {
+            background-color: #ff4500;
+        }
+        h1, h2, h3, p, ul {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="handle-name" onclick="showDescription()">Stocker</div>
+    <ul>
+        <li><a href="slide.html">Home</a></li>
+        <li><a href="help.html">Help</a></li>
+    </ul>
+</nav>
+<script>
+    function showDescription() {
+        var descriptionContainer = document.getElementById("descriptionContainer");
+        descriptionContainer.style.display = "flex";
+        // Scroll to the bottom where the description message is located
+        window.scrollTo(0,document.body.scrollHeight);
+    }
+
+    function hideDescription() {
+        var descriptionContainer = document.getElementById("descriptionContainer");
+        descriptionContainer.style.display = "none";
+    }
+</script>
+
+<h1>Stock Analysis</h1>
+<div class="form-container">
+    <form method="post">
+        <label for="ticker">Company's Name:</label>
+        <input type="text" id="ticker" name="ticker" required>
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" required>
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" required>
+        <button type="submit">Analyze</button>
+    </form>
+</div>
+{% if stock_data %}
+    <div class="result-container">
+        <div class="result">
+            <h2>Fundamental Data</h2>
+            <ul>
+            {% for key, value in fundamentals.items() %}
+                <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+            </ul>
+
+            <h2>Investment Analysis</h2>
+
+            <h3>Financial Ratios Analysis</h3>
+            <ul>
+                <li>
+                    <strong>P/E Ratio:</strong> {{ fundamentals['P/E Ratio'] }}
+                    <br>
+                </li>
+                <li>
+                    <strong>P/B Ratio:</strong> {{ fundamentals['P/B Ratio'] }}
+                    <br>
+                </li>
+                <li>
+                    <strong>ROE:</strong> {{ fundamentals['ROE'] }}
+                    <br>
+                </li>
+                <li>
+                    <strong>Debt to Equity Ratio:</strong> {{ fundamentals['Debt to Equity'] }}
+                    <br>
+                </li>
+                <li>
+                    <strong>Free Cash Flow:</strong> {{ fundamentals['Free Cash Flow'] }}
+                    <br>
+                </li>
+            </ul>
+
+            <h3>Market Sentiment Analysis</h3>
+            <p>{{ sentiment }}</p>
+
+            <h3>Trend Analysis</h3>
+            <p>{{ trend }}</p>
+            <p>{{ rsi_analysis }}</p>
+
+            <h3>Technical Analysis</h3>
+            <p>{{ macd_analysis }}</p>
+            <p>{{ bollinger_within_range }}</p>
+            <p>{{ stochastic_analysis }}</p>
+
+            <h3>Future Price Prediction</h3>
+            <p>Predicted price for the next day: {{ future_price }}</p>
+
+            <h3>Investment Decision</h3>
+            <p>{{ investment_decision }}</p>
+
+            <h2>Graphs</h2>
+            <img src="data:image/png;base64,{{ graph_url }}" alt="Stock Graphs">
+
+            <h2>Raw Data</h2>
+            {{ stock_data|safe }}
+        </div>
+    </div>
+{% elif error %}
+    <p>{{ error }}</p>
+{% endif %}
+</body>
+</html>

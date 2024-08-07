@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Gruppo&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Gruppo', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('https://img.freepik.com/premium-photo/business-graph-trade-monitor-mixed-media_641298-15589.jpg?size=626&ext=jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+	 nav {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: black;
+            color: white;
+        }
+
+	 .handle-name {
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px; /* Adjust this value to move it slightly left */
+        }
+
+
+        .login-container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Add semi-transparent black background to container box */
+            padding: 20px; /* Add padding to container box */
+            border-radius: 10px; /* Add border-radius to container box */
+        }
+        .text-container {
+            width: 600px; /* Set the width of the container box */
+		height: 200px;
+            margin: 0 auto; /* Center the container box */
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+        }
+        label, input {
+            display: block;
+            width: 100%;
+            color: white; /* Set text color to white */
+            font-size: 18px; /* Increase font size */
+        }
+        input {
+            background-color: black; /* Set input background to black */
+            border: 1px solid white; /* Add white border to inputs */
+            padding: 8px; /* Add padding to inputs */
+        }
+        button {
+            margin-top: 10px;
+            width: 100%;
+            background-color: white; /* Set button background to white */
+            color: black; /* Set button text color to black */
+            font-size: 18px; /* Increase font size */
+            padding: 10px; /* Add padding to button */
+            border: none; /* Remove button border */
+            cursor: pointer; /* Add pointer cursor */
+            transition: background-color 0.3s, color 0.3s; /* Add transition effect */
+            border-radius: 20px; /* Add rounded edges */
+        }
+        button:hover {
+            background-color: black; /* Change background color to black on hover */
+            color: white; /* Change text color to white on hover */
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+        <div class="handle-name" onclick="showDescription()">Stocker</div>
+        <ul>
+            <li><a href="slide.html">Home</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+    </nav>
+ <script>
+        function showDescription() {
+            var descriptionContainer = document.getElementById("descriptionContainer");
+            descriptionContainer.style.display = "flex";
+            // Scroll to the bottom where the description message is located
+            window.scrollTo(0,document.body.scrollHeight);
+        }
+
+        function hideDescription() {
+            var descriptionContainer = document.getElementById("descriptionContainer");
+            descriptionContainer.style.display = "none";
+        }
+    </script>
+
+    <div class="login-container">
+        <div class="text-container">
+                        <h1>Insights for Next-Level Stock Predictions!</h1>
+        </div>
+        <form method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username"><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"><br><br>
+            <button type="submit">Login</button>
+        </form>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

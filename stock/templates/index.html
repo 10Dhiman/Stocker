@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Analysis</title>
+    <link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet'>
+    <style>
+        body {
+            background-image: url('https://cdn.pixabay.com/photo/2016/11/27/21/42/stock-1863880_640.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Gruppo', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            color: #ffffff;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: black;
+            color: white;
+        }
+
+        .handle-name {
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px; /* Adjust this value to move it slightly left */
+        }
+
+        .spacer {
+            height: 70px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #292929;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #ffffff;
+        }
+
+        input[type="text"],
+        select,
+        input[type="submit"] {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #555555;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .error {
+            color: #ff4d4d;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #555555;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        td {
+            background-color: #292929;
+            color: #ffffff;
+        }
+
+        .up {
+            color: #00ff00;
+        }
+
+        .down {
+            color: #ff4d4d;
+        }
+
+        .profitable {
+            color: #00ff00; /* Green color for profitable */
+        }
+
+        .risky {
+            color: #ff4d4d; /* Red color for risky */
+        }
+
+        .high-risk {
+            color: #ff4d4d; /* Red color for high risk */
+        }
+
+        /* Description Message Styles */
+        .description-container {
+            display: none;
+            position: fixed;
+            bottom: 0; /* Placed at the bottom */
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px; /* Added padding for better appearance */
+            text-align: center; /* Center align the content */
+        }
+
+        .description-message {
+            background-color: #333;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .description-message p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .description-message .basic-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .description-message .basic-button:hover {
+            background-color: #0056b3;
+        }
+	.premium-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.premium-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    justify-content: center;
+    font-size: 16px;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-radius: 20px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.premium-button:hover {
+    background-color: #000000;
+}
+
+.button {
+    background:#999999;
+    color: white;
+    font: 18px Georgia, sans-serif;
+    line-height: 42px;
+    padding: 1em 3em;
+    position: relative;
+    overflow: hidden;
+}
+
+.button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    background: linear-gradient(to bottom, rgba(230, 175, 145, 0), rgba(255,255,255,0.5) 50%, rgba(229, 172, 142, 0));
+    transform: rotateZ(60deg) translate(-5em, 7.5em);
+}
+
+.button:hover::after, button:focus::after {
+    animation: sheen 1.5s forwards;
+}
+
+@keyframes sheen {
+    100% {
+        transform: rotateZ(60deg) translate(1em, -9em);
+    }
+}
+
+.popup-container {
+    display: none;
+    position: fixed;
+    height:15%;
+    top: 350px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+.popup-content {
+    text-align:center;
+}
+
+.popup-container.show {
+    display: block;
+}
+.close-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    position: center;
+    below: 10px;
+    
+}
+
+
+    </style>
+
+</head>
+<body>
+    <nav>
+        <div class="handle-name" onclick="showDescription()">Stocker</div>
+        <ul>
+            <li><a href="slide.html">Home</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+    </nav>
+    <div class="spacer"></div>
+    <div class="container">
+        <h1>Stock Analysis</h1>
+        
+        <form method="post" action="/index">
+            <input type="text" name="company_name" placeholder="Enter Company Name">
+            <select name="data_range">
+                <option value="0.5_year">6 Months</option>
+                <option value="1_year">1 Year</option>
+                <option value="2_years">2 Years</option>
+                <option value="3_years">3 Years</option>
+                <option value="4_years">4 Years</option>
+                <option value="5_years">5 Years</option>
+                <option value="10_years">10 Years</option>
+            </select>            
+            <input type="submit" value="Search">
+        </form>
+        
+      
+
+        {% if company_name %}
+            <p><strong>Company Name:</strong> {{ company_name }}</p>
+        {% endif %}
+        
+        {% if time_period %}
+            <p><strong>Time Period:</strong> <span style="color: #00ff00;">{{ time_period }}</span></p>
+        {% endif %}
+        
+        {% if error_message %}
+            <p class="error">{{ error_message }}</p>
+        {% endif %}
+        
+        <h2>Stock Price Information</h2>
+        {% if open_price %}
+            <p><strong>Open Price:</strong> ₹ {{ open_price }}</p>
+        {% endif %}
+        {% if close_price %}
+            <p><strong>Close Price:</strong> ₹ {{ close_price }}</p>
+        {% endif %}
+        {% if profit_or_loss %}
+            <p><strong>Profitability:</strong> <span class="{% if profit_or_loss == 'Profitable' %}profitable{% elif profit_or_loss == 'Risky' %}risky{% else %}high-risk{% endif %}">{{ profit_or_loss }}</span></p>
+        {% endif %}
+        
+        <h2>Model Performance</h2>
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Training Set</th>
+                <th>Testing Set</th>
+            </tr>
+            <tr>
+                <td>Accuracy</td>
+                <td>{{ train_accuracy }}</td>
+                <td>{{ test_accuracy }}</td>
+            </tr>
+            <tr>
+                <td>Precision</td>
+                <td>{{ train_precision }}</td>
+                <td>{{ test_precision }}</td>
+            </tr>
+            <tr>
+                <td>Recall</td>
+                <td>{{ train_recall }}</td>
+                <td>{{ test_recall }}</td>
+            </tr>
+            <tr>
+                <td>F1-Score</td>
+                <td>{{ train_f1 }}</td>
+                <td>{{ test_f1 }}</td>
+            </tr>
+        </table>
+
+        <h2>Latest Prediction</h2>
+        <p><strong>Last Prediction:</strong> <span class="{{ 'up' if prediction == 'UP' else 'down' }}">{{ prediction }}</span></p>
+
+        <h2>Stock Price Plot</h2>
+        <img src="{{ plot_url }}" alt="Stock Price Plot">
+    </div>
+
+    <!-- Description Message Container -->
+    <div class="description-container" id="descriptionContainer">
+        <div class="description-message">
+            <p>This page provides stock analysis.<br> Enter a company name and select the time range for analysis.<br> Then, view model performance metrics, the latest prediction, and the stock price plot.</p>
+            <button class="basic-button" onclick="hideDescription()">I Understand</button>
+        </div>
+    </div>
+
+    <script>
+        function showDescription() {
+            var descriptionContainer = document.getElementById("descriptionContainer");
+            descriptionContainer.style.display = "flex";
+            // Scroll to the bottom where the description message is located
+            window.scrollTo(0,document.body.scrollHeight);
+        }
+
+        function hideDescription() {
+            var descriptionContainer = document.getElementById("descriptionContainer");
+            descriptionContainer.style.display = "none";
+        }
+    </script>
+	<div class="premium-button-container">
+    <button class="premium-button button" onclick="window.location.href='login.html'">Go Premium</button>
+</div>
+<div id="popupBox" class="popup-container">
+    <div class="popup-content">
+        <p>Scroll down for premium content!</p>
+        <button class="close-button" onclick="hidePopup()">X</button>
+    </div>
+</div>
+>
+<script>
+    function hidePopup() {
+        var popup = document.getElementById('popupBox');
+        popup.classList.remove('show');
+    }
+</script>
+
+ <script>
+        setTimeout(function() {
+            var popup = document.getElementById('popupBox');
+            popup.classList.add('show');
+        }, 3000); // 3000 milliseconds = 3 seconds
+    </script></body>
+</html>
