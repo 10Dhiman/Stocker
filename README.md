@@ -5,7 +5,7 @@ Then in Terminal Write this following Command
 cd Stock (press Enter)
 python app.py(press Enter)
 After that if it load Successfully go to your browser and write 
-localhosr:5000 (press enter).
+localhost:5000 (press enter).
 And here we go. You have the acess of Stocker.
 
 Recommanded Language: Python,HTML,CSS,JavaScript,SQL
