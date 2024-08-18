@@ -1,6 +1,6 @@
 At first Download the files into your Computer
 Then Go to the Stock folder
-Press on It it and write CMD on the address bar to use the Terminal
+Press on it and write CMD on the address bar to use the Terminal
 Then in Terminal Write this following Command
 cd Stock (press Enter)
 python app.py(press Enter)
